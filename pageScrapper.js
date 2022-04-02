@@ -84,8 +84,18 @@ const scrapeObject = {
           body: payload,
         });
         const data = await response.json();
-        const csv = new ObjectsToCsv(data.StatementInfo.TrxRecord);
-        await csv.toDisk(`./data/mutation-${year}-${month}.csv`);
+        if (data.StatementInfo.TrxRecord.length > 0) {
+          const formattedList = data.StatementInfo.TrxRecord.map(trx => {
+            return {
+              desc: trx.TrxDesc.trim(),
+              date: trx.PostDate,
+              amount: trx.TrxAmount.Amount,
+              status: trx.TrxAmount.BalSign === 'D' ? 'Out' : 'In',
+            };
+          });
+          const csv = new ObjectsToCsv(formattedList);
+          await csv.toDisk(`./data/mutation-${year}-${month}.csv`);
+        }
       }
     }
   },
