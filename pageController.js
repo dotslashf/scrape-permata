@@ -4,9 +4,9 @@ async function scrapePage(browserInstance) {
   let browser;
   try {
     browser = await browserInstance;
-    await pageScrapper.scraper(browser);
+    await pageScrapper.login(browser);
   } catch (e) {
-    console.error('Cant launch browser', e);
+    console.error('Browser err', e);
   }
 }
 
