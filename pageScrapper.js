@@ -1,6 +1,7 @@
 const { Browser, Page } = require('puppeteer');
 const readline = require('readline');
 const fetch = require('node-fetch');
+const ObjectsToCsv = require('objects-to-csv');
 require('dotenv').config();
 
 const rl = readline.createInterface({
@@ -49,8 +50,8 @@ const scrapeObject = {
    */
   async getCookies(page) {
     console.log(`Go to mutation url`);
-    await page.goto(`${this.url}${this.mutationUrl}`);
     await page.waitForTimeout(5000);
+    await page.goto(`${this.url}${this.mutationUrl}`);
     const cookies = await page.cookies();
     const cookiesString = cookies
       .map(cookie => `${cookie.name}=${cookie.value}`)
@@ -68,10 +69,10 @@ const scrapeObject = {
       redirect: 'follow',
     };
 
-    const years = [2022];
+    const years = [2021, 2022];
     for (const year of years) {
-      for (const month of [...Array(3).keys()].map(i => i + 1)) {
-        const body = JSON.stringify({
+      for (const month of [...Array(12).keys()].map(i => i + 1)) {
+        const payload = JSON.stringify({
           currCode: 'IDR',
           acctId: process.env.ACC_ID,
           month: month.toString(),
@@ -80,9 +81,11 @@ const scrapeObject = {
 
         const response = await fetch(`${this.url}${this.mutationFetchUrl}`, {
           ...options,
-          body,
+          body: payload,
         });
-        console.log(JSON.stringify(await response.json(), null, 2));
+        const data = await response.json();
+        const csv = new ObjectsToCsv(data.StatementInfo.TrxRecord);
+        await csv.toDisk(`./data/mutation-${year}-${month}.csv`);
       }
     }
   },
