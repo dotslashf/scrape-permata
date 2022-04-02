@@ -1,7 +1,0 @@
-POST https://www.permatanet.com/services/admins/kaptcha
-Accept: application/json, text/plain, */*
-Content-Type: application/json
-Cookie: s_fid=2366E561C47D97A1-265ADAC344A2B5B2; languagePnet=id; JSESSIONID=0000lzVd6F-73oGEanEXjBgNPS9:1dra7mh2h; New-Repeat=Repeat; AMCVS_266E364B5AA637020A495D04@AdobeOrg=1; AMCV_266E364B5AA637020A495D04@AdobeOrg=359503849|MCIDTS|19083|MCMID|13530527952943831900116372118943387877|MCAAMLH-1649328766|3|MCAAMB-1649328766|RKhpRz8krg2tLO6pguXWp5olkAcUniQYPHaMWWgdJ3xzPWQmdj0y|MCOPTOUT-1648731166s|NONE|MCAID|NONE|vVersion|5.0.1; s_cc=true; TS01bfa3b0=01ddd2ba1ffe6eba9917b59648302fe274e27bc28c0b5af4a40a9167922baa041d477af1e5d8d10e6db4d040e02a35243b4662187b; TS01373bd7=01ddd2ba1f1c35bafe3a39298f146cc900ff51b5c727808f46d1c5519b760b2ed202d483cb7a90d578698185a52a0c679787b7d33c647ce72ea81ab1a8f98bb9f80e701457; s_sq=permatabankdev=%26c.%26a.%26activitymap.%26page%3Dhttps%253A%252F%252Fwww.permatanet.com%252F%26link%3DGanti%2520Kode%26region%3Dform-login%26.activitymap%26.a%26.c&permatabankprod=%26c.%26a.%26activitymap.%26page%3D%252F%26link%3DGanti%2520Kode%26region%3Dform-login%26.activitymap%26.a%26.c%26pid%3D%252F%26oid%3Dhttps%253A%252F%252Fwww.permatanet.com%252Fpnet%252F%26ot%3DA
-Host: www.permatanet.com
-Origin: https://www.permatanet.com
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36

@@ -4,7 +4,8 @@ async function scrapePage(browserInstance) {
   let browser;
   try {
     browser = await browserInstance;
-    await pageScrapper.login(browser);
+    const page = await pageScrapper.login(browser);
+    const cookie = await pageScrapper.getCookies(page);
   } catch (e) {
     console.error('Browser err', e);
   }
