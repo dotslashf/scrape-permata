@@ -1,5 +1,8 @@
 const { Browser, Page } = require('puppeteer');
 const readline = require('readline');
+const fetch = require('node-fetch');
+require('dotenv').config();
+
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
@@ -16,6 +19,7 @@ async function userInput(field) {
 const scrapeObject = {
   url: `https://www.permatanet.com`,
   mutationUrl: `/pnet/saving-detail/IDR#mutation`,
+  mutationFetchUrl: `/services/casa/detailStatement`,
   /**
    *
    * @param {Browser} browser
@@ -44,14 +48,43 @@ const scrapeObject = {
    * @param {Page} page
    */
   async getCookies(page) {
-    await page.waitForTimeout(5000);
     console.log(`Go to mutation url`);
     await page.goto(`${this.url}${this.mutationUrl}`);
+    await page.waitForTimeout(5000);
     const cookies = await page.cookies();
     const cookiesString = cookies
       .map(cookie => `${cookie.name}=${cookie.value}`)
       .join('; ');
     return cookiesString;
+  },
+  async fetchMutation(cookie) {
+    const headers = new fetch.Headers();
+    headers.append('Content-Type', 'application/json');
+    headers.append('Accept', 'application/json, text/plain, */*');
+    headers.append('Cookie', cookie);
+    const options = {
+      method: 'POST',
+      headers,
+      redirect: 'follow',
+    };
+
+    const years = [2022];
+    for (const year of years) {
+      for (const month of [...Array(3).keys()].map(i => i + 1)) {
+        const body = JSON.stringify({
+          currCode: 'IDR',
+          acctId: process.env.ACC_ID,
+          month: month.toString(),
+          year: year.toString(),
+        });
+
+        const response = await fetch(`${this.url}${this.mutationFetchUrl}`, {
+          ...options,
+          body,
+        });
+        console.log(JSON.stringify(await response.json(), null, 2));
+      }
+    }
   },
 };
 

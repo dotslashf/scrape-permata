@@ -6,6 +6,7 @@ async function scrapePage(browserInstance) {
     browser = await browserInstance;
     const page = await pageScrapper.login(browser);
     const cookie = await pageScrapper.getCookies(page);
+    await pageScrapper.fetchMutation(cookie);
   } catch (e) {
     console.error('Browser err', e);
   }
